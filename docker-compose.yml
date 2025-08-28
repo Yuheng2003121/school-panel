@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  postgress:
+    image: postgres:latest
+    container_name: postgress_db
+    environment:
+      - POSTGRES_USER: yuheng
+      - POSTGRES_PASSWORD: 2003121
+      - POSTGRES_DB: school
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  app: 
+    container_name: nextjs_app
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL: postgresql://yuheng:2003121@postgress:5432/school
+    dependencies:
+      - postgress
+    
